@@ -5,6 +5,7 @@ var store = {
 	track_id: undefined,
 	player_id: undefined,
 	race_id: undefined,
+	race: undefined
 }
 
 const updateStore = (state, newState) => {
@@ -85,17 +86,17 @@ async function handleCreateRace() {
 	// Get player_id and track_id from the store
 	const { player_id, track_id } = store;
 	// invoke the API call to create the race, then save the result
-	const race = createRace(player_id, track_id);
+	const race = await createRace(player_id, track_id).then(result => result);
 	// update the store with the race id
-	race.then(raceObj => updateStore(store, { race_id: raceObj.ID }));
+	updateStore(store, { race_id: race.ID, race })
 	// The race has been created, now start the countdown
 	// call the async function runCountdown
 	await runCountdown();
 	console.log("count down completed!");
-	// TODO: call the async function startRace
-	// await startRace();
-	// TODO: call the async function runRace
-	// await runRace();
+	// call the async function startRace
+	await startRace(store.race_id);
+	// call the async function runRace
+	await runRace();
 }
 
 function runRace(raceID) {
