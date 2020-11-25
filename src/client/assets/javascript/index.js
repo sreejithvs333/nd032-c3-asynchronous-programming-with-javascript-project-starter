@@ -13,8 +13,8 @@ function updateStore(state, newState) {
 
 // We need our javascript to wait until the DOM is loaded
 document.addEventListener("DOMContentLoaded", function () {
-	onPageLoad()
-	setupClickHandlers()
+	onPageLoad();
+	setupClickHandlers();
 })
 
 async function onPageLoad() {
@@ -89,7 +89,7 @@ async function handleCreateRace() {
 		const race = await createRace(player_id, track_id);
 		// update the store with the race id
 		// reference for decrementing: https://knowledge.udacity.com/questions/287717 & https://knowledge.udacity.com/questions/357528
-		updateStore(store, { race_id: race.ID, race });
+		updateStore(store, { race_id: race.ID - 1, race });
 		// The race has been created, now start the countdown
 		// call the async function runCountdown
 		await runCountdown();
@@ -98,7 +98,7 @@ async function handleCreateRace() {
 		// call the async function runRace
 		await runRace(store.race_id);
 	} catch (error) {
-			console.log("Something went wrong", error.message);
+		console.log("Something went wrong", error.message);
 	}
 
 }
