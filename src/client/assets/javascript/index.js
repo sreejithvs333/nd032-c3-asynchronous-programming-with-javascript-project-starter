@@ -7,6 +7,10 @@ var store = {
 	race_id: undefined,
 }
 
+const  updateStore = (state, newState) => {
+	Object.assign(state, newState);
+}
+
 // We need our javascript to wait until the DOM is loaded
 document.addEventListener("DOMContentLoaded", function () {
 	onPageLoad()
@@ -38,7 +42,7 @@ function setupClickHandlers() {
 
 		// Race track form field
 		if (target.matches('.card.track')) {
-			handleSelectTrack(target)
+			handleSelectTrack(target);
 		}
 
 		// Podracer form field
