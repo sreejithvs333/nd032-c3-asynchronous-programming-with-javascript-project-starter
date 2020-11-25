@@ -89,7 +89,8 @@ async function handleCreateRace() {
 		const race = await createRace(player_id, track_id);
 		// update the store with the race id
 		// reference for decrementing: https://knowledge.udacity.com/questions/287717 & https://knowledge.udacity.com/questions/357528
-		updateStore(store, { race_id: race.ID - 1, race });
+		updateStore(store, { race_id: race.ID - 1 });
+		console.log("race ID", race.ID - 1)
 		// The race has been created, now start the countdown
 		// call the async function runCountdown
 		await runCountdown();
@@ -107,7 +108,9 @@ function runRace(raceID) {
 	return new Promise(resolve => {
 		// TODO: - use Javascript's built in setInterval method to get race info every 500ms
 		setInterval(() => {
-			console.log(store.race);
+			getRace(raceID).then(result => {
+				console.log(result);
+			})
 		}, 500);
 		/* 
 			TODO: - if the race info status property is "in-progress", update the leaderboard by calling:
@@ -376,10 +379,10 @@ function getRace(id) {
 }
 
 function startRace(id) {
-	return fetch(`${SERVER}/api/races/${id}/start`, {
-		method: 'POST',
-		...defaultFetchOpts(),
-	}).catch(err => console.log("Problem with startRace request::", err))
+  return fetch(`${SERVER}/api/races/${id}/start`, {
+    method: 'POST',
+    ...defaultFetchOpts(),
+  }).catch(err => console.log('Problem with getRace request::', err));
 }
 
 function accelerate(id) {
