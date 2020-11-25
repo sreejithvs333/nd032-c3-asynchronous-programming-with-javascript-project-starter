@@ -115,7 +115,7 @@ function runRace(raceID) {
 					} else if (result.status === "finished") {
 						clearInterval(raceInterval);
 						renderAt('#race', resultsView(result.positions));
-						reslove(result);
+						resolve(result);
 					}
 				})
 		}, 500);
