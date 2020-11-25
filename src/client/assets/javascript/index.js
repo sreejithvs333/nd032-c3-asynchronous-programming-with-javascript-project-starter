@@ -78,25 +78,29 @@ async function delay(ms) {
 
 // This async function controls the flow of the race, add the logic and error handling
 async function handleCreateRace() {
-	// render starting UI
-	const trackName = `Track ${store.track_id}`;
-	renderAt('#race', renderRaceStartView(trackName))
+	try {
+		// render starting UI
+		const trackName = `Track ${store.track_id}`;
+		renderAt('#race', renderRaceStartView(trackName))
 
-	// Get player_id and track_id from the store
-	const { player_id, track_id } = store;
-	// invoke the API call to create the race, then save the result
-	const race = await createRace(player_id, track_id);
-	console.log("got result race", race);
-	// update the store with the race id
-	// reference for decrementing: https://knowledge.udacity.com/questions/287717 & https://knowledge.udacity.com/questions/357528
-	updateStore(store, { race_id: race.ID - 1 });
-	// The race has been created, now start the countdown
-	// call the async function runCountdown
-	await runCountdown();
-	// call the async function startRace
-	await startRace(store.race_id);
-	// call the async function runRace
-	await runRace(store.race_id);
+		// Get player_id and track_id from the store
+		const { player_id, track_id } = store;
+		// invoke the API call to create the race, then save the result
+		const race = await createRace(player_id, track_id);
+		// update the store with the race id
+		// reference for decrementing: https://knowledge.udacity.com/questions/287717 & https://knowledge.udacity.com/questions/357528
+		updateStore(store, { race_id: race.ID, race });
+		// The race has been created, now start the countdown
+		// call the async function runCountdown
+		await runCountdown();
+		// call the async function startRace
+		await startRace(store.race_id);
+		// call the async function runRace
+		await runRace(store.race_id);
+	} catch (error) {
+			console.log("Something went wrong", error.message);
+	}
+
 }
 
 function runRace(raceID) {
