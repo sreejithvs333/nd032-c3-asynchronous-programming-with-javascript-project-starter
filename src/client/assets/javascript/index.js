@@ -52,10 +52,10 @@ function setupClickHandlers() {
 
 		// Submit create race form
 		if (target.matches('#submit-create-race')) {
-			event.preventDefault()
+			event.preventDefault();
 
 			// start race
-			handleCreateRace()
+			handleCreateRace();
 		}
 
 		// Handle acceleration click
@@ -148,7 +148,8 @@ function handleSelectPodRacer(target) {
 	// add class selected to current target
 	target.classList.add('selected')
 
-	// TODO: - save the selected racer to the store
+	// save the selected racer to the store
+	updateStore(store, {player_id: target.id})
 }
 
 function handleSelectTrack(target) {
@@ -163,8 +164,8 @@ function handleSelectTrack(target) {
 	// add class selected to current target
 	target.classList.add('selected')
 
-	// TODO: - save the selected track id to the store
-
+	// save the selected track id to the store
+	updateStore(store, {track_id: target.id});
 }
 
 function handleAccelerate() {
