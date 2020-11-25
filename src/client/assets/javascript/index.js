@@ -34,7 +34,7 @@ async function onPageLoad() {
 
 function setupClickHandlers() {
 	document.addEventListener('click', function (event) {
-		const { target } = event
+		const { target } = event;
 
 		// Race track form field
 		if (target.matches('.card.track')) {
