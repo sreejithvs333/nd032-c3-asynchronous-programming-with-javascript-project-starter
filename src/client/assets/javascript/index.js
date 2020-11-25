@@ -158,7 +158,7 @@ function handleSelectPodRacer(target) {
 	// add class selected to current target
 	target.classList.add('selected')
 
-	// save the selected racer to the store
+	// save the selected racer id to the store
 	updateStore(store, { player_id: target.id })
 }
 
@@ -284,8 +284,9 @@ function resultsView(positions) {
 }
 
 function raceProgress(positions) {
-	let userPlayer = positions.find(e => e.id === store.player_id)
-	userPlayer.driver_name += " (you)"
+	let userPlayer = positions.find(e => e.id === parseInt(store.player_id));
+	console.log("Userplayer:", userPlayer);
+	userPlayer.driver_name += " (you)";
 
 	positions = positions.sort((a, b) => (a.segment > b.segment) ? -1 : 1)
 	let count = 1
