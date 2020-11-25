@@ -182,7 +182,7 @@ function renderRacerCars(racers) {
 
 	return `
 		<ul id="racers">
-			${reuslts}
+			${results}
 		</ul>
 	`
 }
@@ -192,10 +192,10 @@ function renderRacerCard(racer) {
 
 	return `
 		<li class="card podracer" id="${id}">
-			<h3>${driver_name}</h3>
-			<p>${top_speed}</p>
-			<p>${acceleration}</p>
-			<p>${handling}</p>
+			<h3>Name: ${driver_name}</h3>
+			<p>Top speed: ${top_speed}</p>
+			<p>Acceleration: ${acceleration}</p>
+			<p>Handling: ${handling}</p>
 		</li>
 	`
 }
@@ -328,7 +328,7 @@ function getTracks() {
 
 function getRacers() {
 	// GET request to `${SERVER}/api/cars`
-	return fetch(`{SERVER}/api/cars`)
+	return fetch(`${SERVER}/api/cars`)
 	.then(res=> res.json())
 	.catch(error=> console.log("Problem with getRacers request::", error));
 }
