@@ -5,11 +5,10 @@ var store = {
 	track_id: undefined,
 	player_id: undefined,
 	race_id: undefined,
-	race: undefined
 }
 
-const updateStore = (state, newState) => {
-	Object.assign(state, newState);
+function updateStore(state, newState) {
+	store = Object.assign(state, newState);
 }
 
 // We need our javascript to wait until the DOM is loaded
@@ -86,18 +85,20 @@ async function handleCreateRace() {
 	// Get player_id and track_id from the store
 	const { player_id, track_id } = store;
 	// invoke the API call to create the race, then save the result
-	const race = await createRace(player_id, track_id).then(result => result);
-	console.log("got result race",race)
+	const race = await createRace(player_id, track_id);
+	console.log("got result race", race);
 	// update the store with the race id
-	updateStore(store, { race_id: race.ID, race })
+	// reference for decrementing: https://knowledge.udacity.com/questions/287717 & https://knowledge.udacity.com/questions/357528
+	console.log("race ID before store update", race.ID);
+	updateStore(store, { race_id: race.ID - 1 });
+	console.log("after store update",store.race_id);
 	// The race has been created, now start the countdown
 	// call the async function runCountdown
 	await runCountdown();
-	console.log("count down completed!");
 	// call the async function startRace
 	await startRace(store.race_id);
 	// call the async function runRace
-	await runRace();
+	await runRace(store.race_id);
 }
 
 function runRace(raceID) {
@@ -377,8 +378,7 @@ function startRace(id) {
 		method: 'POST',
 		...defaultFetchOpts(),
 	})
-		.then(res => res.json())
-		.catch(err => console.log("Problem with getRace request::", err))
+		.catch(err => console.log("Problem with startRace request::", err))
 }
 
 function accelerate(id) {
