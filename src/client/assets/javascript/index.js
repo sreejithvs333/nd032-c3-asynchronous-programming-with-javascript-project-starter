@@ -89,9 +89,7 @@ async function handleCreateRace() {
 	console.log("got result race", race);
 	// update the store with the race id
 	// reference for decrementing: https://knowledge.udacity.com/questions/287717 & https://knowledge.udacity.com/questions/357528
-	console.log("race ID before store update", race.ID);
 	updateStore(store, { race_id: race.ID - 1 });
-	console.log("after store update",store.race_id);
 	// The race has been created, now start the countdown
 	// call the async function runCountdown
 	await runCountdown();
@@ -127,7 +125,7 @@ function runRace(raceID) {
 async function runCountdown() {
 	try {
 		// wait for the DOM to load
-		await delay(1000)
+		await delay(1000);
 		let timer = 3;
 
 		return new Promise(resolve => {
@@ -377,8 +375,7 @@ function startRace(id) {
 	return fetch(`${SERVER}/api/races/${id}/start`, {
 		method: 'POST',
 		...defaultFetchOpts(),
-	})
-		.catch(err => console.log("Problem with startRace request::", err))
+	}).catch(err => console.log("Problem with startRace request::", err))
 }
 
 function accelerate(id) {
